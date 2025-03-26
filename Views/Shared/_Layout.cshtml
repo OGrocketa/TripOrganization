@@ -4,22 +4,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TripOrganization</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TripOrganization.styles.css" asp-append-version="true" />
 </head>
 <body>
    <header>
-        <nav class="bg-gray-100 w-full">
+        <nav class="bg-gray-100 w-full py-5">
             <div class="container mx-auto flex items-center justify-between">
-                <!-- Left: Logo -->
                 <div class="flex-1">
                     <a class="text-lg font-bold" asp-area="" asp-controller="Home" asp-action="Index">
                         TripOrganization
                     </a>
                 </div>
 
-                <!-- Center: Navigation links -->
                 <div class="flex-1 flex justify-center">
                     <ul class="flex space-x-4">
                         <li>
@@ -33,9 +32,8 @@
                         </li>
                     </ul>
                 </div>
-
-                <!-- Right: Login/Register or Logout -->
-                <div class="flex-1 flex justify-end">
+                
+                <div class="flex-1 flex justify-end flex-row">
                     <partial name="_LoginPartial" />
                 </div>
             </div>

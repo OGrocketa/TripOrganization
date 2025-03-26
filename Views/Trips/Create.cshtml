@@ -4,54 +4,50 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="max-w-2xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-4">Create New Trip</h1>
 
-<h4>Trip</h4>
-<hr />
-<div>
-    <div>
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly"></div>
-            
-            <div>
-                <label asp-for="Title"></label>
-                <input asp-for="Title" />
-                <span asp-validation-for="Title"></span>
-            </div>
+    <form asp-action="Create" class="space-y-4 w-2x1">
+        <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
 
-            <div>
-                <label asp-for="Capacity"></label>
-                <input asp-for="Capacity" />
-                <span asp-validation-for="Capacity"></span>
-            </div>
+        <div>
+            <label asp-for="Title" class="block font-medium mb-1"></label>
+            <input asp-for="Title" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+            <span asp-validation-for="Title" class="text-red-600 text-sm"></span>
+        </div>
 
-            <div>
-                <label asp-for="Data"></label>
-                <input asp-for="Data" />
-                <span asp-validation-for="Data"></span>
-            </div>
+        <div>
+            <label asp-for="Capacity" class="block font-medium mb-1"></label>
+            <input asp-for="Capacity" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+            <span asp-validation-for="Capacity" class="text-red-600 text-sm"></span>
+        </div>
 
-            <div>
-                <label asp-for="Cost"></label>
-                <input asp-for="Cost" />
-                <span asp-validation-for="Cost"></span>
-            </div>
+        <div>
+            <label asp-for="Data" class="block font-medium mb-1"></label>
+            <input asp-for="Data" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+            <span asp-validation-for="Data" class="text-red-600 text-sm"></span>
+        </div>
 
-            <div>
-                <label asp-for="Date"></label>
-                <input asp-for="Date" />
-                <span asp-validation-for="Date"></span>
-            </div>
+        <div>
+            <label asp-for="Cost" class="block font-medium mb-1"></label>
+            <input asp-for="Cost" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+            <span asp-validation-for="Cost" class="text-red-600 text-sm"></span>
+        </div>
 
-            <div>
-                <input type="submit" value="Create" />
-            </div>
-        </form>
+        <div>
+            <label asp-for="Date" class="block font-medium mb-1"></label>
+            <input asp-for="Date" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+            <span asp-validation-for="Date" class="text-red-600 text-sm"></span>
+        </div>
+
+        <div>
+            <input type="submit" value="Create" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition" />
+        </div>
+    </form>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="text-blue-600 hover:underline">Back to List</a>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

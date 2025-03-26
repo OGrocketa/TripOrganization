@@ -4,57 +4,42 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="px-4 py-6">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Trips</h1>
+        <a asp-action="Create" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            Create New
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
-<table>
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Capacity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+    <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border border-gray-300">
+            <thead class="bg-gray-100 text-left">
+                <tr>
+                    <th class="px-4 py-2 border-b">Title</th>
+                    <th class="px-4 py-2 border-b">Capacity</th>
+                    <th class="px-4 py-2 border-b">Data</th>
+                    <th class="px-4 py-2 border-b">Cost</th>
+                    <th class="px-4 py-2 border-b">Date</th>
+                    <th class="px-4 py-2 border-b">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Capacity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Title)</td>
+                    <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Capacity)</td>
+                    <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Data)</td>
+                    <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Cost)</td>
+                    <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td class="px-4 py-2 border-b space-x-2">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="text-blue-600 hover:underline">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="text-green-600 hover:underline">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="text-red-600 hover:underline">Delete</a>
+                    </td>
+                </tr>
 }
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</div>

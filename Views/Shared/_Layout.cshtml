@@ -4,62 +4,60 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TripOrganization</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TripOrganization.styles.css" asp-append-version="true" />
 </head>
-<body>
-   <header>
-        <nav class="bg-gray-100 w-full py-5">
-            <div class="container mx-auto flex items-center justify-between">
-                <div class="flex-1">
-                    <a class="text-lg font-bold" asp-area="" asp-controller="Home" asp-action="Index">
-                        TripOrganization
-                    </a>
+    <body> 
+        <div class="h-screen">
+
+            <header>
+            <nav class="bg-gray-200 w-full py-5">
+                <div class="container mx-auto flex items-center justify-between">
+                    <div class="flex-1">
+                        <a class="text-lg font-bold" asp-area="" asp-controller="Home" asp-action="Index">
+                            TripOrganization
+                        </a>
+                    </div>
+
+                    <div class="flex-1 flex justify-center">
+                        <ul class="flex space-x-4">
+                            <li>
+                                <a asp-area="" asp-controller="Home" asp-action="Index" class="text-blue-600 hover:underline">Home</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Trips" asp-action="Index" class="text-blue-600 hover:underline">Trips</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="flex-1 flex justify-end flex-row">
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
-
-                <div class="flex-1 flex justify-center">
-                    <ul class="flex space-x-4">
-                        <li>
-                            <a asp-area="" asp-controller="Home" asp-action="Index" class="text-blue-600 hover:underline">Home</a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-blue-600 hover:underline">Privacy</a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="Trips" asp-action="Index" class="text-blue-600 hover:underline">Trips</a>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="flex-1 flex justify-end flex-row">
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
 
 
 
-    <div>
-        <main role="main">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="bg-gray-200 text-gray-700 py-4 mt-8 absolute bottom-0 w-full">
-        <div class="container mx-auto flex justify-between items-center px-4">
-            <span>&copy; 2025 - TripOrganization</span>
-            <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-blue-600 hover:underline">
-                Privacy
-            </a>
+        <div>
+            <main role="main">
+                @RenderBody()
+            </main>
         </div>
-    </footer>
+
+        <footer class="bg-gray-200 text-gray-700 py-4 0 w-full absolute bottom-0">
+            <div class="container mx-auto flex justify-between items-center px-4">
+                <span>&copy; 2025 - TripOrganization</span>
+            </div>
+        </footer>
 
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+
+    </div>
+  
 </html>

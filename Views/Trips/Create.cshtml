@@ -1,0 +1,59 @@
+@model TripOrganization.Models.Trip
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Trip</h4>
+<hr />
+<div>
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly"></div>
+            
+            <div>
+                <label asp-for="Title"></label>
+                <input asp-for="Title" />
+                <span asp-validation-for="Title"></span>
+            </div>
+
+            <div>
+                <label asp-for="Capacity"></label>
+                <input asp-for="Capacity" />
+                <span asp-validation-for="Capacity"></span>
+            </div>
+
+            <div>
+                <label asp-for="Data"></label>
+                <input asp-for="Data" />
+                <span asp-validation-for="Data"></span>
+            </div>
+
+            <div>
+                <label asp-for="Cost"></label>
+                <input asp-for="Cost" />
+                <span asp-validation-for="Cost"></span>
+            </div>
+
+            <div>
+                <label asp-for="Date"></label>
+                <input asp-for="Date" />
+                <span asp-validation-for="Date"></span>
+            </div>
+
+            <div>
+                <input type="submit" value="Create" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

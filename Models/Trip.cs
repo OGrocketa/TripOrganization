@@ -12,6 +12,7 @@ public class Trip{
     public decimal Cost { get; set; }
 
     [DataType(DataType.Date)]
+    [Required]
     public DateTime Date { get; set; }
 
 }

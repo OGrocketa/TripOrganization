@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TripOrganization.Data;
 
@@ -10,9 +11,11 @@ using TripOrganization.Data;
 namespace TripOrganization.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250326190834_AddOwnerIdField")]
+    partial class AddOwnerIdField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.3");
@@ -226,7 +229,6 @@ namespace TripOrganization.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Data")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Date")
@@ -237,7 +239,6 @@ namespace TripOrganization.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

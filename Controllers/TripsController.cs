@@ -7,16 +7,28 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TripOrganization.Data;
 using TripOrganization.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace TripOrganization.Controllers
 {
+    [Authorize]
     public class TripsController : Controller
     {
+        private readonly UserManager<IdentityUser>_userManager;
         private readonly ApplicationDbContext _context;
 
-        public TripsController(ApplicationDbContext context)
+        public TripsController(ApplicationDbContext context,UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+
         }
 
         // GET: Trips
@@ -56,6 +68,12 @@ namespace TripOrganization.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Capacity,Data,Cost,Date")] Trip trip)
         {
+            var user = await _userManager.GetUserAsync(User);
+
+            trip.OwnerId = user.Id;
+
+            ModelState.Remove(nameof(trip.OwnerId));
+
             if (ModelState.IsValid)
             {
                 _context.Add(trip);
@@ -88,10 +106,23 @@ namespace TripOrganization.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Capacity,Data,Cost,Date")] Trip trip)
         {
-            if (id != trip.Id)
+
+            var existingTrip = await _context.Trip.FindAsync(id);
+            if (existingTrip == null || id != trip.Id)
             {
                 return NotFound();
             }
+
+            var user = await _userManager.GetUserAsync(User);
+
+            trip.OwnerId = user.Id;
+
+            if(existingTrip.OwnerId != user.Id)
+            {
+                return Unauthorized();
+            }
+
+            ModelState.Remove(nameof(trip.OwnerId));
 
             if (ModelState.IsValid)
             {
@@ -139,10 +170,17 @@ namespace TripOrganization.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var trip = await _context.Trip.FindAsync(id);
-            if (trip != null)
+            var existingTrip = await _context.Trip.FindAsync(id);
+            var user = await _userManager.GetUserAsync(User);
+
+            if(existingTrip.OwnerId != user.Id)
             {
-                _context.Trip.Remove(trip);
+                return Unauthorized();
+            }
+
+            if (existingTrip != null)
+            {
+                _context.Trip.Remove(existingTrip);
             }
 
             await _context.SaveChangesAsync();

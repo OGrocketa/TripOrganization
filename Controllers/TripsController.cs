@@ -71,13 +71,14 @@ namespace TripOrganization.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Capacity,Data,Cost,Date")] Trip trip)
+        public async Task<IActionResult> Create([Bind("Id,Title,Capacity,Data,Cost,Date,Joined")] Trip trip)
         {
             var user = await _userManager.GetUserAsync(User);
 
             trip.OwnerId = user.Id;
 
             ModelState.Remove(nameof(trip.OwnerId));
+            trip.Joined = 0;
 
             if (ModelState.IsValid)
             {
@@ -112,7 +113,7 @@ namespace TripOrganization.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Capacity,Data,Cost,Date")] Trip updatedTrip)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Capacity,Data,Cost,Date,Joined")] Trip updatedTrip)
         {
             if (id != updatedTrip.Id)
             {

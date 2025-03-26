@@ -13,6 +13,8 @@ public class Trip{
     [Required]
     public int Capacity {get; set;}
     [Required]
+    public int Joined {get; set;}
+    [Required]
     public string? Data {get; set;}
 
     [Range(0, double.MaxValue, ErrorMessage = "Cost must be a positive number")]

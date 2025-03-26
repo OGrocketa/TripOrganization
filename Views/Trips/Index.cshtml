@@ -17,6 +17,7 @@
             <thead class="bg-gray-100 text-left">
                 <tr>
                     <th class="px-4 py-2 border-b">Title</th>
+                    <th class="px-4 py-2 border-b">Joined</th>
                     <th class="px-4 py-2 border-b">Capacity</th>
                     <th class="px-4 py-2 border-b">Data</th>
                     <th class="px-4 py-2 border-b">Cost</th>
@@ -28,6 +29,7 @@
 @foreach (var item in Model) {
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Title)</td>
+                    <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Joined)</td>
                     <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Capacity)</td>
                     <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Data)</td>
                     <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Cost)</td>

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    var currentUserId = (string)ViewBag.UserId;
 }
 
 <div class="max-w-2xl mx-auto p-4">
@@ -33,8 +34,13 @@
     </div>
 
     <div class="mt-4">
-        <a asp-action="Edit" asp-route-id="@Model?.Id" class="text-blue-600 hover:underline">Edit</a>
-        |
+
+        @if(currentUserId == Model.OwnerId)
+        {
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="text-blue-600 hover:underline">Edit</a>
+            <span>|</span>
+        }
+     
         <a asp-action="Index" class="text-blue-600 hover:underline">Back to List</a>
     </div>
 </div>

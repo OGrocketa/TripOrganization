@@ -34,6 +34,9 @@ namespace TripOrganization.Controllers
         // GET: Trips
         public async Task<IActionResult> Index()
         {
+            var user = await _userManager.GetUserAsync(User);
+            string userId= user.Id;
+            ViewBag.UserId = userId; 
             return View(await _context.Trip.ToListAsync());
         }
 
@@ -51,7 +54,9 @@ namespace TripOrganization.Controllers
             {
                 return NotFound();
             }
-
+            var user = await _userManager.GetUserAsync(User);
+            string userId= user.Id;
+            ViewBag.UserId = userId; 
             return View(trip);
         }
 
@@ -96,6 +101,9 @@ namespace TripOrganization.Controllers
             {
                 return NotFound();
             }
+            var user = await _userManager.GetUserAsync(User);
+            string userId= user.Id;
+            ViewBag.UserId = userId; 
             return View(trip);
         }
 
@@ -104,36 +112,41 @@ namespace TripOrganization.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Capacity,Data,Cost,Date")] Trip trip)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Capacity,Data,Cost,Date")] Trip updatedTrip)
         {
-
-            var existingTrip = await _context.Trip.FindAsync(id);
-            if (existingTrip == null || id != trip.Id)
+            if (id != updatedTrip.Id)
             {
                 return NotFound();
             }
-
+            var trip = await _context.Trip.FindAsync(id);
             var user = await _userManager.GetUserAsync(User);
-
-            trip.OwnerId = user.Id;
-
-            if(existingTrip.OwnerId != user.Id)
+            if (user == null || trip.OwnerId != user.Id)
             {
                 return Unauthorized();
             }
-
             ModelState.Remove(nameof(trip.OwnerId));
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(trip);
+                    if (trip == null)
+                    {
+                        return NotFound();
+                    }
+                    
+                    trip.Title = updatedTrip.Title;
+                    trip.Capacity = updatedTrip.Capacity;
+                    trip.Data = updatedTrip.Data;
+                    trip.Cost = updatedTrip.Cost;
+                    trip.Date = updatedTrip.Date;
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TripExists(trip.Id))
+                    if (!TripExists(updatedTrip.Id))
                     {
                         return NotFound();
                     }
@@ -144,8 +157,9 @@ namespace TripOrganization.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(trip);
+            return View(updatedTrip);
         }
+
 
         // GET: Trips/Delete/5
         public async Task<IActionResult> Delete(int? id)

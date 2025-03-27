@@ -57,6 +57,10 @@ namespace TripOrganization.Controllers
             var user = await _userManager.GetUserAsync(User);
             string userId= user.Id;
             ViewBag.UserId = userId; 
+
+            bool isJoined = await _context.TripUser.AnyAsync(tp => tp.TripId == trip.Id && tp.UserId == userId);
+            ViewBag.IsJoined = isJoined;
+
             return View(trip);
         }
 
@@ -205,6 +209,79 @@ namespace TripOrganization.Controllers
         private bool TripExists(int id)
         {
             return _context.Trip.Any(e => e.Id == id);
+        }
+
+        // POST: Trips/Join
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Join(int tripId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            bool alreadyJoined = await _context.TripUser
+                .AnyAsync(tp => tp.TripId == tripId && tp.UserId == user.Id);
+
+            if (!alreadyJoined)
+            {
+                var trip = await _context.Trip.FindAsync(tripId);
+                if(trip.Capacity <= trip.Joined)
+                {
+                    TempData["ErrorMessage"] = "The trip is full. You cannot join this trip.";
+
+                }
+                else
+                {
+                var participant = new TripUser
+                {
+                    TripId = tripId,
+                    UserId = user.Id
+                };
+
+                _context.TripUser.Add(participant);
+
+                
+                if (trip == null)
+                {
+                    return NotFound();
+                }
+                trip.Joined++; 
+
+                await _context.SaveChangesAsync();
+                }
+            }
+                
+
+            return RedirectToAction("Details", new { id = tripId });
+        }
+
+        // POST: Trips/Leave
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Leave(int tripId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var participant = await _context.TripUser
+                .FirstOrDefaultAsync(tp => tp.TripId == tripId && tp.UserId == user.Id);
+            
+            if (participant != null)
+            {
+                _context.TripUser.Remove(participant);
+                var trip = await _context.Trip.FindAsync(tripId);
+                trip.Joined--;
+                await _context.SaveChangesAsync();
+            }
+            
+
+            return RedirectToAction("Details", new { id = tripId });
         }
     }
 }
